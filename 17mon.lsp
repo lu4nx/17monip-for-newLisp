@@ -1,6 +1,8 @@
 ;;;; author: lu4nx <lx@shellcodes.org>
 ;;;; date: 2014-05-28
-;;;; 17monip for newLisp
+;;;; 17MonIP for newLisp
+
+(context 'MonIP)
 
 ; 转换点分IPv4地址到32位整型表示
 (define (ip2long ip)
@@ -33,9 +35,8 @@
 
 ; 从索引数据中找到A段地址
 (define (get-ip-index-start ip-a index-data)
-  (let ((tmp-offset (* ip-a 4)))
-    (first (unpack "<lu"
-                   (tmp-offset 4 index-data)))))
+  (first (unpack "<lu"
+                 ((* ip-a 4) 4 index-data))))
 
 (define (search-address offset start index-data)
   (let ((start-offset (+ 1024 (* start 8)))
@@ -83,5 +84,7 @@
             (get-ip-address f offset (nth 0 search-result) (nth 1 search-result))
           nil)))))
 
+(context MAIN)
+
 ;; Example
-;;(println (find-ip "8.8.8.8"))
+;;(println (MonIP:find-ip "8.8.8.8"))
